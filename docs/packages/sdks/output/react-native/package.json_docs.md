@@ -1,0 +1,196 @@
+# package.json
+
+## File Metadata
+- **Path**: `packages/sdks/output/react-native/package.json`
+- **Type**: Text file
+- **Size**: 5,238 bytes (160 lines)
+- **Extension**: `.json`
+- **Language**: JSON
+
+## Original Source
+```json
+{
+  "name": "@builder.io/sdk-react-native",
+  "description": "Builder.io SDK for React Native",
+  "version": "1.0.8",
+  "homepage": "https://github.com/BuilderIO/builder/tree/main/packages/sdks/output/react-native",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BuilderIO/builder.git",
+    "directory": "packages/sdks/output/react-native"
+  },
+  "type": "module",
+  "main": "lib/browser/commonjs/index.js",
+  "module": "lib/browser/module/index.js",
+  "react-native": "lib/browser/commonjs/index.js",
+  "types": "lib/browser/typescript/index.d.ts",
+  "exports": {
+    ".": {
+      "react-native": {
+        "types": "./lib/browser/typescript/index.d.ts",
+        "import": "./lib/browser/module/index.js",
+        "require": "./lib/browser/commonjs/index.js"
+      },
+      "node": {
+        "types": "./lib/node/typescript/index.d.ts",
+        "import": "./lib/node/module/index.js",
+        "require": "./lib/node/commonjs/index.js"
+      },
+      "browser": {
+        "types": "./lib/browser/typescript/index.d.ts",
+        "import": "./lib/browser/module/index.js",
+        "require": "./lib/browser/commonjs/index.js"
+      },
+      "edge-routine": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "workerd": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "deno": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "lagon": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "netlify": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "edge-light": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "bun": {
+        "types": "./lib/edge/typescript/index.d.ts",
+        "import": "./lib/edge/module/index.js",
+        "require": "./lib/edge/commonjs/index.js"
+      },
+      "electron": {
+        "types": "./lib/node/typescript/index.d.ts",
+        "import": "./lib/node/module/index.js",
+        "require": "./lib/node/commonjs/index.js"
+      },
+      "default": {
+        "types": "./lib/browser/typescript/index.d.ts",
+        "import": "./lib/browser/module/index.js",
+        "require": "./lib/browser/commonjs/index.js"
+      }
+    },
+    "./bundle/edge": {
+      "types": "./lib/edge/typescript/index.d.ts",
+      "import": "./lib/edge/module/index.js",
+      "require": "./lib/edge/commonjs/index.js"
+    },
+    "./bundle/node": {
+      "types": "./lib/node/typescript/index.d.ts",
+      "import": "./lib/node/module/index.js",
+      "require": "./lib/node/commonjs/index.js"
+    },
+    "./bundle/browser": {
+      "types": "./lib/browser/typescript/index.d.ts",
+      "import": "./lib/browser/module/index.js",
+      "require": "./lib/browser/commonjs/index.js"
+    }
+  },
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "release": "npm publish",
+    "build-inline-fns": "yarn g:build-inline-fns",
+    "build:one": "bob build",
+    "/**/": "the command below cannot be run in parallel because build:browser MUST run first.",
+    "build": "nx run-many -p @builder.io/sdk-react-native -t build:browser build:node build:edge --parallel=false",
+    "build:node": "SDK_ENV=node yarn build:one",
+    "build:edge": "SDK_ENV=edge yarn build:one",
+    "build:browser": "SDK_ENV=browser yarn build:one"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.10",
+    "css-to-react-native": "^3.2.0",
+    "isolated-vm": "^4.6.0",
+    "react-native-render-html": "^6.3.4",
+    "react-native-storage": "^1.0.1",
+    "react-native-video": "^5.1.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-native": ">=0.64.3",
+    "react-native-url-polyfill": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-flow": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@builder.io/sdks": "workspace:*",
+    "@tsconfig/react-native": "^2.0.3",
+    "@types/node": "^20.11.16",
+    "@types/react-native-video": "^5.0.9",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "nx": "^16.6.0",
+    "nx-cloud": "^16.2.0",
+    "react-native-builder-bob": "^0.21.3",
+    "react-native-url-polyfill": "^2.0.0",
+    "rimraf": "^3.0.2",
+    "tsup": "^7.2.0",
+    "typescript": "^4.9.4"
+  },
+  "nx": {
+    "targets": {
+      "build-inline-fns": {
+        "dependsOn": [
+          "^build:react-native"
+        ]
+      },
+      "build": {
+        "dependsOn": [
+          "build-inline-fns",
+          "^build:react-native",
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/lib",
+          "{projectRoot}/types"
+        ]
+      }
+    }
+  }
+}
+
+```
+
+
+## High-Level Overview
+JSON configuration or data file.
+
+## Detailed Walkthrough
+
+*No structured elements detected*
+
+## Usage Examples
+*No usage examples found in source. Refer to tests or documentation.*
+
+## Dependencies and Related Files
+*No explicit dependencies found*
+
+## Performance and Security Notes
+*No specific performance or security concerns detected*
+
+## Testing
+*No test information available. Check for corresponding test files.*
+
+---
+*Generated by Repo Book Generator v1.0.0*

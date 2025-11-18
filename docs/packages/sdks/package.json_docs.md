@@ -1,0 +1,210 @@
+# package.json
+
+## File Metadata
+- **Path**: `packages/sdks/package.json`
+- **Type**: Text file
+- **Size**: 6,325 bytes (174 lines)
+- **Extension**: `.json`
+- **Language**: JSON
+
+## Original Source
+```json
+{
+  "name": "@builder.io/sdks",
+  "private": true,
+  "scripts": {
+    "prepare": "cd ../../ && npx husky install",
+    "cz": "cz",
+    "g:build-inline-fns": "node ./output-generation/build-inline-fns.mjs",
+    "build-mitosis": "../../node_modules/@builder.io/mitosis-cli/bin/mitosis build",
+    "build:react": "yarn build-mitosis --target=react && yarn run set-sdk-version react",
+    "build:qwik": "yarn build-mitosis --target=qwik && yarn run set-sdk-version qwik",
+    "build:svelte": "yarn build-mitosis --target=svelte && yarn run set-sdk-version svelte",
+    "build:solid": "yarn build-mitosis --target=solid && yarn run set-sdk-version solid",
+    "build:react-native": "yarn build-mitosis --target=reactNative && yarn run set-sdk-version react-native",
+    "build:vue": "yarn build-mitosis --target=vue && yarn run set-sdk-version vue",
+    "build:nextjs": "yarn build-mitosis --target=rsc && yarn run set-sdk-version nextjs",
+    "build:all": "yarn build-mitosis",
+    "start": "watch 'yarn run build-mitosis' ./src ./overrides",
+    "_start": "watch 'yarn run build-mitosis --target=$SDK' ./src ./overrides",
+    "start:react": "SDK=react yarn _start",
+    "start:qwik": "SDK=qwik yarn _start",
+    "start:svelte": "SDK=svelte yarn _start",
+    "start:solid": "SDK=solid yarn _start",
+    "start:reactNative": "SDK=reactNative yarn _start",
+    "start:vue": "SDK=vue yarn _start",
+    "start:rsc": "SDK=rsc yarn _start",
+    "test:update": "yarn test:browser --update && yarn test:node --update && yarn test:edge --update",
+    "test": "yarn test:browser && yarn test:node && yarn test:edge",
+    "test:browser": "SDK_ENV=browser vitest run",
+    "test:node": "SDK_ENV=node vitest run",
+    "test:edge": "SDK_ENV=edge vitest run",
+    "remove-symlinks": "./scripts/remove-resolutions.sh && yarn",
+    "add-symlinks": "./scripts/add-resolutions.sh && yarn",
+    "upgrade-mitosis:dev": "yarn up @builder.io/mitosis@dev @builder.io/mitosis-cli@dev @builder.io/eslint-plugin-mitosis@dev",
+    "upgrade-mitosis": "yarn up @builder.io/mitosis @builder.io/mitosis-cli @builder.io/eslint-plugin-mitosis",
+    "prettier": "prettier .",
+    "lint": "yarn run prettier --write && yarn run eslint --fix",
+    "eslint": "eslint . --quiet",
+    "eslint:watch": "watch 'yarn run eslint' ./src ./overrides",
+    "g:publint": "cd $INIT_CWD && publint",
+    "g:attw": "cd $INIT_CWD && attw --pack .",
+    "g:pkg:lint": "cd $INIT_CWD && yarn g:publint && yarn g:attw",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "yarn run typecheck --watch",
+    "ci:lint:sdks": "yarn run prettier --check && yarn run eslint",
+    "e2e:build:svelte": "nx run-many -t build -p @e2e/svelte @e2e/sveltekit",
+    "e2e:build:react-native": "nx run-many -t build -p @e2e/react-native",
+    "e2e:build:solid": "nx run-many -t build -p @e2e/solid @e2e/solid-start",
+    "e2e:build:qwik": "nx run-many -t build -p @e2e/qwik-city",
+    "e2e:build:react": "nx run-many -t build -p @e2e/react @e2e/next-pages-dir @e2e/next-app-dir-client",
+    "e2e:build:nextjs": "nx run-many -t build -p @e2e/next-app-dir",
+    "e2e:build:vue": "nx run-many -t build -p @e2e/vue @e2e/nuxt",
+    "e2e:run": "nx test @e2e/tests",
+    "e2e:run:svelte": "SDK=svelte yarn e2e:run",
+    "e2e:run:react-native": "SDK=reactNative yarn e2e:run",
+    "e2e:run:solid": "SDK=solid yarn e2e:run",
+    "e2e:run:qwik": "SDK=qwik yarn e2e:run",
+    "e2e:run:react": "SDK=react yarn e2e:run",
+    "e2e:run:nextjs": "SDK=rsc yarn e2e:run",
+    "e2e:run:vue": "SDK=vue yarn e2e:run",
+    "loop": "bash ./scripts/loop-command.sh",
+    "version-sdks": "bash ./scripts/version-sdks.sh",
+    "version:all:patch": "yarn version-sdks patch all",
+    "version:all:minor": "yarn version-sdks minor all",
+    "version:all:dev": "yarn version-sdks dev all",
+    "set-sdk-version": "bash ./scripts/set-sdk-version.sh",
+    "upgrade-example": "bash ./scripts/upgrade-example.sh",
+    "upgrade-example:all": "yarn loop upgrade-example latest"
+  },
+  "dependencies": {
+    "@builder.io/mitosis": "^0.0.145",
+    "@builder.io/mitosis-cli": "^0.0.145",
+    "isolated-vm": "^4.6.0",
+    "node-fetch": "^2.6.1",
+    "nx": "^16.6.0",
+    "nx-cloud": "^16.2.0",
+    "seedrandom": "^3.0.5",
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.13.3",
+    "@builder.io/eslint-plugin-mitosis": "^0.0.15",
+    "@types/node-fetch": "^2.5.12",
+    "@types/seedrandom": "^3.0.4",
+    "@types/traverse": "^0.6.32",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.12.0",
+    "eslint-plugin-react": "latest",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "git-cz": "^4.8.0",
+    "husky": "^7.0.4",
+    "npm-run-all": "^4.1.5",
+    "pinst": "^3.0.0",
+    "prettier": "^2.5.0",
+    "publint": "^0.2.6",
+    "recast": "^0.23.4",
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0",
+    "watch": "^1.0.2"
+  },
+  "engines": {
+    "yarn": ">= 3.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "git-cz"
+    }
+  },
+  "nx": {
+    "targets": {
+      "build:react": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/react/src"
+        ]
+      },
+      "build:qwik": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/qwik/src"
+        ]
+      },
+      "build:svelte": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/svelte/src"
+        ]
+      },
+      "build:solid": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/solid/src"
+        ]
+      },
+      "build:react-native": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/react-native/src"
+        ]
+      },
+      "build:vue": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/vue/src"
+        ]
+      },
+      "build:nextjs": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "{projectRoot}/output/nextjs/src"
+        ]
+      }
+    },
+    "implicitDependencies": [
+      "@builder.io/react"
+    ]
+  }
+}
+
+```
+
+
+## High-Level Overview
+JSON configuration or data file.
+
+## Detailed Walkthrough
+
+*No structured elements detected*
+
+## Usage Examples
+*No usage examples found in source. Refer to tests or documentation.*
+
+## Dependencies and Related Files
+*No explicit dependencies found*
+
+## Performance and Security Notes
+*No specific performance or security concerns detected*
+
+## Testing
+*No test information available. Check for corresponding test files.*
+
+---
+*Generated by Repo Book Generator v1.0.0*

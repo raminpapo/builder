@@ -1,0 +1,194 @@
+# symbol.lite.tsx
+
+## File Metadata
+- **Path**: `packages/sdks/src/blocks/symbol/symbol.lite.tsx`
+- **Type**: Text file
+- **Size**: 3,660 bytes (133 lines)
+- **Extension**: `.tsx`
+- **Language**: TypeScript (React)
+
+## Original Source
+```tsx
+import {
+  onMount,
+  onUpdate,
+  useMetadata,
+  useStore,
+  useTarget,
+} from '@builder.io/mitosis';
+import ContentVariants from '../../components/content-variants/index.js';
+import type { BuilderContent } from '../../types/builder-content.js';
+import { filterAttrs } from '../helpers.js';
+/**
+ * This import is used by the Svelte SDK. Do not remove.
+ */
+
+import { getClassPropName } from '../../functions/get-class-prop-name.js';
+import type { Nullable } from '../../types/typescript.js';
+import { setAttrs } from '../helpers.js';
+import { fetchSymbolContent } from './symbol.helpers.js';
+import type { SymbolProps } from './symbol.types.js';
+
+useMetadata({
+  rsc: {
+    componentType: 'server',
+  },
+});
+
+export default function Symbol(props: SymbolProps) {
+  const state = useStore({
+    get className() {
+      return [
+        ...useTarget({
+          reactNative: [],
+          default: [props.attributes[getClassPropName()]],
+        }),
+        'builder-symbol',
+        props.symbol?.inline ? 'builder-inline-symbol' : undefined,
+        props.symbol?.dynamic || props.dynamic
+          ? 'builder-dynamic-symbol'
+          : undefined,
+      ]
+        .filter(Boolean)
+        .join(' ');
+    },
+
+    contentToUse: useTarget<Nullable<BuilderContent>>({
+      default: props.symbol?.content,
+      rsc: (async () =>
+        props.symbol?.content ||
+        (await fetchSymbolContent({
+          symbol: props.symbol,
+          builderContextValue: props.builderContext.value,
+        }))) as Nullable<BuilderContent>,
+    }),
+    setContent() {
+      if (state.contentToUse) return;
+
+      fetchSymbolContent({
+        symbol: props.symbol,
+        builderContextValue: props.builderContext.value,
+      }).then((newContent) => {
+        if (newContent) {
+          state.contentToUse = newContent;
+        }
+      });
+    },
+  });
+
+  onUpdate(() => {
+    state.setContent();
+  }, [props.symbol]);
+
+  onMount(() => {
+    useTarget({
+      react: () => {},
+      reactNative: () => {},
+
+      default: () => {
+        state.setContent();
+      },
+    });
+  });
+
+  return (
+    <div
+      {...useTarget({
+        vue: filterAttrs(props.attributes, 'v-on:', false),
+        svelte: filterAttrs(props.attributes, 'on:', false),
+        default: {},
+      })}
+      {...useTarget({
+        vue: filterAttrs(props.attributes, 'v-on:', true),
+        svelte: filterAttrs(props.attributes, 'on:', true),
+        default: props.attributes,
+      })}
+      className={state.className}
+      {...useTarget({
+        reactNative: { dataSet: { class: state.className } },
+        default: {},
+      })}
+    >
+      <ContentVariants
+        __isNestedRender
+        apiVersion={props.builderContext.value.apiVersion}
+        apiKey={props.builderContext.value.apiKey!}
+        context={{
+          ...props.builderContext.value.context,
+          symbolId: props.builderBlock?.id,
+        }}
+        customComponents={Object.values(props.builderComponents)}
+        data={{
+          ...props.symbol?.data,
+          ...props.builderContext.value.localState,
+          ...state.contentToUse?.data?.state,
+        }}
+        model={props.symbol?.model}
+        content={state.contentToUse}
+        linkComponent={props.builderLinkComponent}
+        blocksWrapper={useTarget({
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          reactNative: View,
+          default: 'div',
+        })}
+        contentWrapper={useTarget({
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          reactNative: View,
+          default: 'div',
+        })}
+      />
+    </div>
+  );
+}
+
+```
+
+
+## High-Level Overview
+This import is used by the Svelte SDK. Do not remove.
+
+
+## Detailed Walkthrough
+
+### Functions (1)
+
+- `Symbol()`
+
+### Imports (8)
+
+- `../../functions/get-class-prop-name.js`
+- `./symbol.types.js`
+- `../helpers.js`
+- `../../types/builder-content.js`
+- `./symbol.helpers.js`
+- `../../types/typescript.js`
+- `../../components/content-variants/index.js`
+
+### Exports (1)
+
+- `Symbol`
+
+## Usage Examples
+*No usage examples found in source. Refer to tests or documentation.*
+
+## Dependencies and Related Files
+### Imports
+- `../../types/typescript.js` (local)
+- `../../functions/get-class-prop-name.js` (local)
+- `./symbol.types.js` (local)
+- `../helpers.js` (local)
+- `../../types/builder-content.js` (local)
+- `./symbol.helpers.js` (local)
+- `@builder.io/mitosis` (external)
+- `../../components/content-variants/index.js` (local)
+
+## Performance and Security Notes
+*No specific performance or security concerns detected*
+
+## Testing
+*No test information available. Check for corresponding test files.*
+
+---
+*Generated by Repo Book Generator v1.0.0*

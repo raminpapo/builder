@@ -1,0 +1,11 @@
+# Keywords: target.ts
+
+**Source**: `packages/sdks/overrides/solid/src/constants/target.ts`
+
+## Extracted Keywords (1)
+
+### TARGET {#TARGET}
+
+Function/identifier defined in packages/sdks/overrides/solid/src/constants/target.ts
+
+**File**: [packages/sdks/overrides/solid/src/constants/target.ts](./target.ts_docs.md)

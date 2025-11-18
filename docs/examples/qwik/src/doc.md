@@ -1,0 +1,15 @@
+# Documentation: examples/qwik/src
+
+## Overview
+
+This folder contains 6 files and 3 subdirectories.
+
+## Purpose
+Source code directory containing the main application code.
+
+## Statistics
+
+- Total files: 6
+- Text files: 6
+- Binary files: 0
+- Total size: 4,719 bytes

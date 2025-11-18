@@ -1,0 +1,234 @@
+# ci.yml
+
+## File Metadata
+- **Path**: `.github/workflows/ci.yml`
+- **Type**: Text file
+- **Size**: 4,847 bytes (198 lines)
+- **Extension**: `.yml`
+- **Language**: YAML
+
+## Original Source
+```yaml
+---
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+env:
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
+
+jobs:
+  sdks-base:
+    name: Gen 2 SDKs checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Run prettier
+        run: yarn workspace @builder.io/sdks ci:lint:sdks
+
+      - name: Typecheck
+        run: yarn nx typecheck @builder.io/sdks
+
+      - name: Run tests
+        run: yarn nx test @builder.io/sdks
+
+  sdks:
+    name: Gen 2 SDKs
+    runs-on: ubuntu-latest
+
+    strategy:
+      # we still want to run all the SDK tests even if one fails, to get a full picture of the state of the SDKs.
+      fail-fast: false
+      matrix:
+        sdk: ['svelte', 'qwik', 'react-native', 'react', 'nextjs', 'solid', 'vue']
+        include:
+          - sdk: svelte
+            sdk-name: svelte
+          - sdk: qwik
+            sdk-name: qwik
+          - sdk: react-native
+            sdk-name: react-native
+          - sdk: react
+            sdk-name: react
+          - sdk: nextjs
+            sdk-name: react-nextjs
+          - sdk: solid
+            sdk-name: solid
+          - sdk: vue
+            sdk-name: vue
+
+    steps:
+      - name: Setup
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Build E2E apps
+        run: yarn workspace @builder.io/sdks e2e:build:${{ matrix.sdk }}
+
+      - name: Run E2E tests
+        run: yarn workspace @builder.io/sdks e2e:run:${{ matrix.sdk }}
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v3
+        # Only upload the report if the tests failed
+        if: ${{ failure() }}
+        with:
+          name: ${{ matrix.sdk }}-playwright-report
+          path: packages/sdks-tests/playwright-report/
+          retention-days: 30
+
+  gen1-sdk-core:
+    name: Gen 1 SDK Core
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Build Core
+        run: yarn nx build @builder.io/sdk
+
+  gen1-react-sdk:
+    name: Gen 1 React SDK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+        with:
+          cache-node-modules: true
+          cache-install-state: true
+
+      - name: Build E2E apps
+        run: yarn workspace @builder.io/packages e2e:build:old-react
+
+      - name: Run E2E tests
+        run: yarn workspace @builder.io/packages e2e:run:old-react
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use node version 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - run: npm run ci:lint
+
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ['webcomponents', 'widgets']
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use node version 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: NPM install
+        run: npm ci --legacy-peer-deps
+        working-directory: packages/${{ matrix.package }}
+
+      - name: Build
+        run: npm run ci:build --if-present
+        working-directory: packages/${{ matrix.package }}
+
+      - name: Test
+        run: npm run ci:test --if-present
+        working-directory: packages/${{ matrix.package }}
+
+```
+
+
+## High-Level Overview
+we still want to run all the SDK tests even if one fails, to get a full picture of the state of the SDKs.
+
+## Detailed Walkthrough
+
+*No structured elements detected*
+
+## Usage Examples
+*No usage examples found in source. Refer to tests or documentation.*
+
+## Dependencies and Related Files
+*No explicit dependencies found*
+
+## Performance and Security Notes
+🔒 **Security**: Contains password/secret references - verify proper handling
+
+## Testing
+*No test information available. Check for corresponding test files.*
+
+---
+*Generated by Repo Book Generator v1.0.0*

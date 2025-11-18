@@ -1,0 +1,342 @@
+# e2e-checkout-order-summary.json
+
+## File Metadata
+- **Path**: `examples/vue/vue-storefront-2/tests/e2e/fixtures/test-data/e2e-checkout-order-summary.json`
+- **Type**: Text file
+- **Size**: 7,317 bytes (306 lines)
+- **Extension**: `.json`
+- **Language**: JSON
+
+## Original Source
+```json
+{
+  "Should contain correct product data in Order Summary": {
+    "products": [{
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0W",
+        "size": 34,
+        "quantity": 3
+      },
+      {
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0X",
+        "size": 36,
+        "quantity": 1
+      },
+      {
+        "name": "T-Shirt Moschino Cheap And Chic black",
+        "id": 1,
+        "sku": "M0E20000000DLPH",
+        "size": 34,
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "address": {
+        "shipping": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "apartment": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        },
+        "billing": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "apartment": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        }
+      }
+    },
+    "shippingMethod": "Express US",
+    "expected": {
+      "products": [
+        [
+          "Shirt Aspesi white M M0E20000000ED0W",
+          "34",
+          "white",
+          "3",
+          "$498.75",
+          "$359.10"
+        ],
+        [
+          "Shirt Aspesi white M M0E20000000ED0X",
+          "36",
+          "white",
+          "1",
+          "$166.25"
+        ],
+        [
+          "T-Shirt Moschino Cheap And Chic black M0E20000000DLPH",
+          "34",
+          "black",
+          "1",
+          "$372.50"
+        ]
+      ],
+      "prices": [
+        "$1,037.50",
+        "$897.85",
+        "$907.85"
+      ]
+    }
+  },
+  "Should display correct prices - bottom summary": {
+    "products": [{
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0W",
+        "size": 34,
+        "quantity": 3
+      },
+      {
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0X",
+        "size": 36,
+        "quantity": 1
+      },
+      {
+        "name": "T-Shirt Moschino Cheap And Chic black",
+        "id": 1,
+        "sku": "M0E20000000DLPH",
+        "size": 34,
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "address": {
+        "shipping": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "apartment": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        },
+        "billing": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "apartment": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        }
+      }
+    },
+    "shippingMethod": "Express US",
+    "expected": {
+      "prices": [
+        "$897.85",
+        "$10.00",
+        "$907.85"
+      ]
+    }
+  },
+  "Should display correct data - cart preview summary": {
+    "products": [{
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0W",
+        "size": 34,
+        "quantity": 3
+      },
+      {
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0X",
+        "size": 36,
+        "quantity": 1
+      },
+      {
+        "name": "T-Shirt Moschino Cheap And Chic black",
+        "id": 1,
+        "sku": "M0E20000000DLPH",
+        "size": 34,
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "address": {
+        "shipping": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "apartment": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        },
+        "billing": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "apartment": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        }
+      }
+    },
+    "shippingMethod": "Express US",
+    "expected": {
+      "cartPreview": [
+        "5",
+        "$1,037.50",
+        "$897.85",
+        "$10.00",
+        "$907.85"
+      ]
+    }
+  },
+  "Should display correct addresses": {
+    "products": [{
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0W",
+        "size": 34,
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "address": {
+        "shipping": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "streetNumber": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        },
+        "billing": {
+          "firstName": "John",
+          "lastName": "Smith",
+          "streetName": "Nuxt Rd.",
+          "streetNumber": "1",
+          "city": "Las Vegas",
+          "state": "Nevada",
+          "country": "US",
+          "postalCode": "80001",
+          "phone": "+3133731337"
+        }
+      }
+    },
+    "shippingMethod": "Express US",
+    "expected": {
+      "shippingAddress": [
+        "Express US",
+        "Jane Doe",
+        "Vuestorefront Rd. 13/37",
+        "Los Angeles, California 90001",
+        "US",
+        "+12345678910"
+      ],
+      "billingAddress": [
+        "John Smith",
+        "Nuxt Rd. 1",
+        "Las Vegas, Nevada 80001",
+        "US",
+        "+3133731337"
+      ]
+    }
+  },
+  "Should display \"Same as shipping address\" for billing address": {
+    "products": [{
+        "name": "Shirt Aspesi white M",
+        "id": 1,
+        "sku": "M0E20000000ED0W",
+        "size": 34,
+        "quantity": 1
+      }
+    ],
+    "customer": {
+      "address": {
+        "shipping": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "streetNumber": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        },
+        "billing": {
+          "firstName": "Jane",
+          "lastName": "Doe",
+          "streetName": "Vuestorefront Rd.",
+          "streetNumber": "13/37",
+          "city": "Los Angeles",
+          "state": "California",
+          "country": "US",
+          "postalCode": "90001",
+          "phone": "+12345678910"
+        }
+      }
+    },
+    "shippingMethod": "Express US",
+    "expected": {
+      "shippingAddress": [
+        "Express US",
+        "Jane Doe",
+        "Vuestorefront Rd. 13/37",
+        "Los Angeles, California 90001",
+        "US",
+        "+12345678910"
+      ],
+      "billingAddress": [
+        "Same as shipping address"
+      ]
+    }
+  }  
+}
+
+```
+
+
+## High-Level Overview
+JSON configuration or data file.
+
+## Detailed Walkthrough
+
+*No structured elements detected*
+
+## Usage Examples
+*No usage examples found in source. Refer to tests or documentation.*
+
+## Dependencies and Related Files
+*No explicit dependencies found*
+
+## Performance and Security Notes
+*No specific performance or security concerns detected*
+
+## Testing
+*No test information available. Check for corresponding test files.*
+
+---
+*Generated by Repo Book Generator v1.0.0*

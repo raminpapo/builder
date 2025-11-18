@@ -1,0 +1,186 @@
+# plugin-loader.ts
+
+## File Metadata
+- **Path**: `packages/plugin-loader/src/plugin-loader.ts`
+- **Type**: Text file
+- **Size**: 3,362 bytes (113 lines)
+- **Extension**: `.ts`
+- **Language**: TypeScript
+
+## Original Source
+```typescript
+'use strict';
+import './polyfills';
+import * as reactDom from 'react-dom';
+import * as React from 'react';
+// import * as builderReact from '@builder.io/react'
+import * as emotionCore from '@emotion/core';
+import * as emotionStyled from '@emotion/styled';
+import * as mobx from 'mobx';
+import * as mobxReact from 'mobx-react';
+import * as mst from '@builder.io/mobx-state-tree';
+import * as mui from '@material-ui/core';
+import * as muiIcons from '@material-ui/icons';
+import * as builder from '@builder.io/sdk';
+
+const context = {
+  user: {
+    organization: {
+      value: {
+        settings: {
+          plugins: {
+            get() {},
+            set() {},
+          },
+        },
+      },
+    },
+  },
+};
+
+import 'systemjs/dist/system.js';
+import 'systemjs/dist/extras/named-register.js';
+
+// Ugh, webpack...
+export const system: typeof System = eval('System');
+
+const exposePackages = {
+  react: React,
+  'react-dom': reactDom,
+  '@builder.io/sdk': builder,
+  // '@builder.io/react': builderReact,
+  '@emotion/core': emotionCore,
+  '@emotion/styled': emotionStyled,
+  mobx: mobx,
+  'mobx-state-tree': mst,
+  'mobx-react': mobxReact,
+  '@material-ui/core': mui,
+  '@material-ui/icons': muiIcons,
+};
+
+Object.keys(exposePackages).forEach(packageName => {
+  system.register(packageName, [], _export => {
+    return {
+      execute: () => {
+        const content = (exposePackages as any)[packageName];
+        _export({
+          ...content,
+          default: content,
+        });
+      },
+    };
+  });
+});
+
+if (typeof self !== 'undefined') {
+  self.addEventListener('message', event => {
+    const data = event.data;
+    if (data && data.type === 'builder.loadPlugin') {
+      console.log('loadPluginMessage', event.data);
+
+      const plugin = '@builder.io/plugin-cloudinary';
+      const pluginUrl = plugin.startsWith('http') ? plugin : 'https://unpkg.com/' + plugin;
+      system
+        .import(pluginUrl)
+        .then((output: any) => {
+          // TODO: read the exported component
+          const editor = builder.Builder.editors[0];
+          if (editor && editor.component) {
+            // TODO: bind value, onchange, context
+            reactDom.render(React.createElement(editor.component), document.body);
+          } else if (output.default) {
+            reactDom.render(React.createElement(output.default), document.body);
+          }
+        })
+        .catch(console.error);
+    }
+  });
+  self.postMessage({ type: 'builder.workerLoaded' }, '*');
+}
+
+// reactDom.render(React.createElement('div', {}, 'hello there'), document.body)
+
+setTimeout(() => {
+  const plugin = '@builder.io/plugin-cloudinary';
+  const pluginUrl = plugin.startsWith('http') ? plugin : 'https://unpkg.com/' + plugin;
+  system
+    // TODO: why is systemjs loading/returning React as output here??
+    .import(pluginUrl)
+    .then((output: any) => {
+      setTimeout(() => {
+        const editor = builder.Builder.editors[0];
+        if (editor && editor.component) {
+          // TODO: bind value, onchange, context
+          reactDom.render(
+            React.createElement(editor.component, { context, style: { background: 'red' } }),
+            document.body
+          );
+        } else if (output.default) {
+          reactDom.render(React.createElement(output.default, { context }), document.body);
+        }
+      });
+    })
+    .catch(console.error);
+}, 100);
+
+```
+
+
+## High-Level Overview
+import * as builderReact from '@builder.io/react'
+Ugh, webpack...
+'@builder.io/react': builderReact,
+
+## Detailed Walkthrough
+
+### Functions (1)
+
+- `content()`
+
+### Imports (11)
+
+- `@builder.io/react`
+- `@material-ui/icons`
+- `@emotion/styled`
+- `@builder.io/sdk`
+- `mobx`
+- `react-dom`
+- `@builder.io/mobx-state-tree`
+- `@emotion/core`
+- `mobx-react`
+- `react`
+- `@material-ui/core`
+
+### Exports (1)
+
+- `system`
+
+## Usage Examples
+*No usage examples found in source. Refer to tests or documentation.*
+
+## Dependencies and Related Files
+### Imports
+- `@builder.io/react` (external)
+- `@material-ui/icons` (external)
+- `@emotion/styled` (external)
+- `@builder.io/sdk` (external)
+- `mobx` (external)
+- `systemjs/dist/system.js` (external)
+- `./polyfills` (local)
+- `react-dom` (external)
+- `@builder.io/mobx-state-tree` (external)
+- `@emotion/core` (external)
+- `mobx-react` (external)
+- `systemjs/dist/extras/named-register.js` (external)
+- `react` (external)
+- `@material-ui/core` (external)
+
+## Performance and Security Notes
+⚠️ **Security**: Uses `eval()` which can be dangerous
+⚡ **Performance**: Uses timers - ensure proper cleanup
+
+## Testing
+*No test information available. Check for corresponding test files.*
+
+---
+*Generated by Repo Book Generator v1.0.0*

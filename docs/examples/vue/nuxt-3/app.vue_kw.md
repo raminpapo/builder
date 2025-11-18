@@ -1,0 +1,53 @@
+# Keywords: app.vue
+
+**Source**: `examples/vue/nuxt-3/app.vue`
+
+## Extracted Keywords (8)
+
+### ./components/HelloWorld.vue {#.-components-HelloWorld.vue}
+
+Import/dependency in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### @builder.io/sdk-vue {#@builder.io-sdk-vue}
+
+Import/dependency in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### BUILDER_PUBLIC_API_KEY {#BUILDER_PUBLIC_API_KEY}
+
+Function/identifier defined in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### HelloWorldComponent {#HelloWorldComponent}
+
+Import/dependency in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### REGISTERED_COMPONENTS {#REGISTERED_COMPONENTS}
+
+Function/identifier defined in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### TODO {#TODO}
+
+TODO in examples/vue/nuxt-3/app.vue: enter your public API key
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### route {#route}
+
+Function/identifier defined in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
+
+### your {#your}
+
+Import/dependency in examples/vue/nuxt-3/app.vue
+
+**File**: [examples/vue/nuxt-3/app.vue](./app.vue_docs.md)
